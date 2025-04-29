@@ -86,42 +86,56 @@ def get_win_probabilities():
         ('Primarina', 'Rillaboom'): 0.0252,
         ('Primarina', 'Heatran'): 1.0,
         ('Primarina', 'Urshifu'): 1.0,
-        ('Primarina', 'Zapdos'): 0.0,
+        ('Primarina', 'Zapdos'): 0.0,  # Zapdos wins 100% against Primarina
 
         ('Sylveon', 'Primarina'): 0.90417,
         ('Sylveon', 'Sylveon'): 0.5,
         ('Sylveon', 'Rillaboom'): 0.387,
         ('Sylveon', 'Heatran'): 0.0,
         ('Sylveon', 'Urshifu'): 1.0,
-        ('Sylveon', 'Zapdos'): 0.00625,
+        ('Sylveon', 'Zapdos'): 0.99375,  # Zapdos wins 99.375% against Sylveon
 
         ('Rillaboom', 'Primarina'): 0.9748,
         ('Rillaboom', 'Sylveon'): 0.613,
         ('Rillaboom', 'Rillaboom'): 0.5,
         ('Rillaboom', 'Heatran'): 0.95,
         ('Rillaboom', 'Urshifu'): 0.6954,
-        ('Rillaboom', 'Zapdos'): 0.0165,
+        ('Rillaboom', 'Zapdos'): 0.0165,  # Zapdos wins 98.35% against Rillaboom
 
         ('Heatran', 'Primarina'): 0.0,
         ('Heatran', 'Sylveon'): 1.0,
         ('Heatran', 'Rillaboom'): 0.05,
         ('Heatran', 'Heatran'): 0.5,
         ('Heatran', 'Urshifu'): 0.0,
-        ('Heatran', 'Zapdos'): 0.0,
+        ('Heatran', 'Zapdos'): 0.0,  # Zapdos wins 100% against Heatran
 
         ('Urshifu', 'Primarina'): 0.0,
         ('Urshifu', 'Sylveon'): 0.0,
         ('Urshifu', 'Rillaboom'): 0.3046,
         ('Urshifu', 'Heatran'): 1.0,
         ('Urshifu', 'Urshifu'): 0.5,
-        ('Urshifu', 'Zapdos'): 0.3,
+        ('Urshifu', 'Zapdos'): 0.3,  # Zapdos wins 70% against Urshifu
 
         ('Zapdos', 'Primarina'): 1.0,
-        ('Zapdos', 'Sylveon'): 0.99375,
+        ('Zapdos', 'Sylveon'): 0.00625,
         ('Zapdos', 'Rillaboom'): 0.9835,
         ('Zapdos', 'Heatran'): 1.0,
         ('Zapdos', 'Urshifu'): 0.7,
-        ('Zapdos', 'Zapdos'): 0.5
+        ('Zapdos', 'Zapdos'): 0.5,
+
+        ('Garchomp', 'Zapdos'): 1.0,
+        ('Zapdos', 'Garchomp'): 0.0,
+        ('Garchomp', 'Primarina'): 0.04167,
+        ('Primarina', 'Garchomp'): 0.95833,
+        ('Garchomp', 'Sylveon'): 0.4012,
+        ('Sylveon', 'Garchomp'): 0.5988,
+        ('Garchomp', 'Heatran'): 0.1831,
+        ('Heatran', 'Garchomp'): 0.8169,
+        ('Garchomp', 'Rillaboom'): 0.9676,
+        ('Rillaboom', 'Garchomp'): 0.0324,
+        ('Garchomp', 'Urshifu'): 0.04167,
+        ('Urshifu', 'Garchomp'): 0.9583,
+        ('Garchomp', 'Garchomp'): 0.5,
     }
     return probabilities
 
@@ -211,6 +225,7 @@ def plot_performance_table(df, output_filename, highlight_rows=None):
     table = ax.table(cellText=df.values, colLabels=df.columns,
                      loc='center', cellLoc='center')
 
+    print(df)
     # Style the table
     table.auto_set_font_size(False)
     table.set_fontsize(10)
@@ -224,6 +239,7 @@ def plot_performance_table(df, output_filename, highlight_rows=None):
         elif col == 2 and row - 1 < len(df):  # Win rate column (excluding the separator)
             try:
                 win_rate_text = df.iloc[row-1, 2]
+                print(win_rate_text)
                 if win_rate_text != '...':
                     win_rate = float(win_rate_text.strip('%')) / 100
                     # Create a color gradient from red (low) to white (neutral) to green (high)
@@ -305,7 +321,7 @@ def main():
         team_results[team] /= team_matchups[team]
 
     # Create and display the performance table
-    performance_table = create_performance_table(team_results, top_n=10, bottom_n=10)
+    performance_table = create_performance_table(team_results, top_n=17, bottom_n=18)
     print("\nTeam Performance Ranking:")
     print(performance_table)
 

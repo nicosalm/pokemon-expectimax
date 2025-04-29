@@ -282,7 +282,7 @@ def get_win_probabilities():
         ('Sylveon', 'Rillaboom'): 0.387,
         ('Sylveon', 'Heatran'): 0.0,
         ('Sylveon', 'Urshifu'): 1.0,
-        ('Sylveon', 'Zapdos'): 0.00625,  # Zapdos wins 99.375% against Sylveon
+        ('Sylveon', 'Zapdos'): 0.99375,  # Zapdos wins 99.375% against Sylveon
 
         ('Rillaboom', 'Primarina'): 0.9748,
         ('Rillaboom', 'Sylveon'): 0.613,
@@ -306,11 +306,25 @@ def get_win_probabilities():
         ('Urshifu', 'Zapdos'): 0.3,  # Zapdos wins 70% against Urshifu
 
         ('Zapdos', 'Primarina'): 1.0,
-        ('Zapdos', 'Sylveon'): 0.99375,
+        ('Zapdos', 'Sylveon'): 0.00625,
         ('Zapdos', 'Rillaboom'): 0.9835,
         ('Zapdos', 'Heatran'): 1.0,
         ('Zapdos', 'Urshifu'): 0.7,
-        ('Zapdos', 'Zapdos'): 0.5
+        ('Zapdos', 'Zapdos'): 0.5,
+
+        ('Garchomp', 'Zapdos'): 1.0,
+        ('Zapdos', 'Garchomp'): 0.0,
+        ('Garchomp', 'Primarina'): 0.04167,
+        ('Primarina', 'Garchomp'): 0.95833,
+        ('Garchomp', 'Sylveon'): 0.4012,
+        ('Sylveon', 'Garchomp'): 0.5988,
+        ('Garchomp', 'Heatran'): 0.1831,
+        ('Heatran', 'Garchomp'): 0.8169,
+        ('Garchomp', 'Rillaboom'): 0.9676,
+        ('Rillaboom', 'Garchomp'): 0.0324,
+        ('Garchomp', 'Urshifu'): 0.04167,
+        ('Urshifu', 'Garchomp'): 0.9583,
+        ('Garchomp', 'Garchomp'): 0.5,
     }
     return probabilities
 
@@ -322,20 +336,35 @@ def main():
     # Define the three matchups from your request
     matchups = [
         {
-            'team_a': ['Zapdos', 'Urshifu', 'Sylveon'],
-            'team_b': ['Primarina', 'Rillaboom', 'Heatran'],
-            'output_prefix': 'matchup1'
+            'team_a': ['Heatran', 'Primarina', 'Sylveon'],
+            'team_b': ['Heatran', 'Urshifu', 'Sylveon'],
+            'output_prefix': 'matchup0'
         },
         {
-            'team_a': ['Urshifu', 'Heatran', 'Sylveon'],
-            'team_b': ['Urshifu', 'Zapdos', 'Primarina'],
-            'output_prefix': 'matchup2'
-        },
-        {
-            'team_a': ['Sylveon', 'Rillaboom', 'Heatran'],
-            'team_b': ['Zapdos', 'Primarina', 'Urshifu'],
-            'output_prefix': 'matchup3'
-        }
+    'team_a': ['Heatran', 'Sylveon', 'Zapdos'],
+    'team_b': ['Heatran', 'Garchomp', 'Urshifu'],
+    'output_prefix': 'matchup1'
+},
+{
+    'team_a': ['Sylveon', 'Rillaboom', 'Garchomp'],
+    'team_b': ['Primarina', 'Urshifu', 'Heatran'],
+    'output_prefix': 'matchup2'
+},
+{
+    'team_a': ['Heatran', 'Sylveon', 'Primarina'],
+    'team_b': ['Urshifu', 'Rillaboom', 'Garchomp'],
+    'output_prefix': 'matchup3'
+},
+{
+    'team_a': ['Heatran', 'Sylveon', 'Garchomp'],
+    'team_b': ['Rillaboom', 'Primarina', 'Urshifu'],
+    'output_prefix': 'matchup4'
+},
+{
+    'team_a': ['Garchomp', 'Primarina', 'Rillaboom'],
+    'team_b': ['Heatran', 'Urshifu', 'Sylveon'],
+    'output_prefix': 'matchup5'
+}
     ]
 
     results = []
@@ -358,7 +387,7 @@ def main():
         })
 
     # Create a summary visualization for all matchups
-    fig, axes = plt.subplots(3, 2, figsize=(20, 15))
+    fig, axes = plt.subplots(6, 2, figsize=(20, 15))
 
     for i, result in enumerate(results):
         team_a = result['team_a']
